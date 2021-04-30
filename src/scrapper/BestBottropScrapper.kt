@@ -7,10 +7,12 @@ import it.skrape.fetcher.skrape
 import it.skrape.selects.DocElement
 import it.skrape.selects.html5.div
 import it.skrape.selects.html5.li
+import org.slf4j.LoggerFactory
 import java.lang.Exception
 import java.time.format.DateTimeFormatter
+import java.util.*
 
-private val inFormatter = DateTimeFormatter.ofPattern("EEEE, dd. LLLL yyyy")
+private val inFormatter = DateTimeFormatter.ofPattern("EEEE, dd. LLLL yyyy", Locale.GERMAN)
 private val outFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
 class BestBottropScrapper {
@@ -49,6 +51,7 @@ class BestBottropScrapper {
                 try {
                     outFormatter.format(inFormatter.parse(it.ownText))
                 } catch (e: Exception) {
+                    LoggerFactory.getLogger(this::class.java.simpleName).error(e.message)
                     null
                 }
             }
