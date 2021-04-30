@@ -15,10 +15,10 @@ private val outFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
 class BestBottropScrapper {
 
-    fun getEventGroups(): List<EventGroup> {
+    fun getEventGroups(streetId: String, number: String): List<EventGroup> {
         return skrape(HttpFetcher) {
             request {
-                url = BEST_URL
+                url = "$BEST_URL?street=$streetId&number=$number"
             }
 
             extract {
@@ -61,6 +61,6 @@ class BestBottropScrapper {
     }
 
     private companion object {
-        private const val BEST_URL = "https://best.abisapp.de/abfuhrkalender?street=60C28030&number=291"
+        private const val BEST_URL = "https://best.abisapp.de/abfuhrkalender"
     }
 }

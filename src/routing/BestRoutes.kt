@@ -11,22 +11,51 @@ fun Route.bestGarbageRouting() {
     route("/garbage") {
         route("/brown") {
             get {
-                call.respond(scrapper.getEventGroups().find { it.type == "Biotonne" } ?: HttpStatusCode.InternalServerError)
+                val streetId = call.request.queryParameters["streetId"]
+                val number = call.request.queryParameters["number"]
+                if(streetId == null || number == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Missing or invalid number or streetId")
+                    return@get
+                }
+                call.respond(scrapper.getEventGroups(streetId, number).find { it.type == "Biotonne" }
+                    ?: HttpStatusCode.InternalServerError)
             }
+
         }
         route("/yellow") {
             get {
-                call.respond(scrapper.getEventGroups().find { it.type == "Gelbe Tonne" } ?: HttpStatusCode.InternalServerError)
+                val streetId = call.request.queryParameters["streetId"]
+                val number = call.request.queryParameters["number"]
+                if(streetId == null || number == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Missing or invalid number or streetId")
+                    return@get
+                }
+                call.respond(scrapper.getEventGroups(streetId, number).find { it.type == "Gelbe Tonne" }
+                    ?: HttpStatusCode.InternalServerError)
             }
         }
         route("/blue") {
             get {
-                call.respond(scrapper.getEventGroups().find { it.type == "Papiertonne" } ?: HttpStatusCode.InternalServerError)
+                val streetId = call.request.queryParameters["streetId"]
+                val number = call.request.queryParameters["number"]
+                if(streetId == null || number == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Missing or invalid number or streetId")
+                    return@get
+                }
+                call.respond(scrapper.getEventGroups(streetId, number).find { it.type == "Papiertonne" }
+                    ?: HttpStatusCode.InternalServerError)
             }
         }
         route("/grey") {
             get {
-                call.respond(scrapper.getEventGroups().find { it.type == "Graue Tonne" } ?: HttpStatusCode.InternalServerError)
+                val streetId = call.request.queryParameters["streetId"]
+                val number = call.request.queryParameters["number"]
+                if(streetId == null || number == null) {
+                    call.respond(HttpStatusCode.BadRequest, "Missing or invalid number or streetId")
+                    return@get
+                }
+                call.respond(scrapper.getEventGroups(streetId, number).find { it.type == "Graue Tonne" }
+                    ?: HttpStatusCode.InternalServerError)
             }
         }
     }
