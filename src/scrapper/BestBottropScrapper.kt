@@ -15,7 +15,7 @@ import java.util.*
 private val inFormatter = DateTimeFormatter.ofPattern("EEEE, dd. LLLL yyyy", Locale.GERMAN)
 private val outFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
-class BestBottropScrapper {
+class BestBottropScrapper(private val mapper: EventIdMapper) {
 
     fun getEventGroups(streetId: String, number: String): List<EventGroup> {
         return skrape(HttpFetcher) {
@@ -31,7 +31,7 @@ class BestBottropScrapper {
                     }.map {
                         val id = it.getId()
                         val events: List<String> = it.getEvents()
-                        EventGroup(id, events)
+                        EventGroup(mapper.map(id), events)
                     }
                 }
             }
